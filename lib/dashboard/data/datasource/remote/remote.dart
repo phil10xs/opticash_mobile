@@ -5,8 +5,6 @@ import 'package:opticash_mobile/core/utils/logger.dart';
 abstract class DashBoardRemoteDatasource {
   Future<Response<Map<String, dynamic>>> getUserProfile();
   Future<Response<Map<String, dynamic>>> getAccounts();
-  Future<Response<Map<String, dynamic>>> getAllDebitableAccounts();
-
   Future<Response<dynamic>> login({required Map<String, dynamic> data});
 }
 
@@ -31,7 +29,7 @@ class DashBoardRemoteDatasourceImpl extends DashBoardRemoteDatasource {
   @override
   Future<Response<Map<String, dynamic>>> getAccounts() async {
     var response = await networkRequester.get(
-      '/account/api/AccountOperation/GetAllAccounts',
+      '/user/test/register',
       isProtected: true,
       data: {},
       contentType: "application/json",
@@ -41,7 +39,6 @@ class DashBoardRemoteDatasourceImpl extends DashBoardRemoteDatasource {
 
   @override
   Future<Response<Map<String, dynamic>>> getUserProfile() async {
-    Log.d("User result source start");
     var response = await networkRequester.get(
       '/profile/api/Profile/GetCustomerProfile',
       isProtected: true,
@@ -49,17 +46,6 @@ class DashBoardRemoteDatasourceImpl extends DashBoardRemoteDatasource {
       contentType: "application/json",
     );
     Log.d("User result source ${response.data.toString()}");
-    return response;
-  }
-
-  @override
-  Future<Response<Map<String, dynamic>>> getAllDebitableAccounts() async {
-    var response = await networkRequester.get(
-      '/account/api/CorporateAccountOperation/GetDebitableAccounts',
-      isProtected: true,
-      data: {},
-      contentType: "application/json",
-    );
     return response;
   }
 }

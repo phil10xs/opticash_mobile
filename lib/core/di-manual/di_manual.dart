@@ -1,4 +1,3 @@
-import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:opticash_mobile/core/networkhandler/interceptor.dart';
@@ -7,14 +6,12 @@ import 'package:opticash_mobile/dashboard/data/repository/repo.dart';
 import 'package:opticash_mobile/dashboard/domain/repository/repo.dart';
 import 'package:opticash_mobile/dashboard/domain/usecase/dash_usecases.dart';
 
-import '../networkhandler/network_requester.dart';
-
 GetIt getIt = GetIt.instance;
 
 Future<void> setUp() async {
   ///network
   BaseOptions options = BaseOptions(
-      baseUrl: "",
+      baseUrl: "https://devapi.opticash.io/api/v1",
       receiveDataWhenStatusError: true,
       sendTimeout: 30 * 10000,
       connectTimeout: 30 * 10000,
@@ -24,19 +21,10 @@ Future<void> setUp() async {
 
   //module
   var interceptor = VulteInterceptor();
-  // var trackedInterceptor = TrackedDioInterceptor(addCorrelationHeaders: true);
-  // getIt.registerLazySingleton<TrackedDioInterceptor>(() => trackedInterceptor);
   getIt.registerLazySingleton<VulteInterceptor>(() => interceptor);
   var dio = Dio(options);
   getIt.registerLazySingleton<Dio>(() => dio);
-  var dioAppDynamicsTracked = TrackedDioClient(dio);
-  getIt.registerLazySingleton<TrackedDioClient>(() => dioAppDynamicsTracked);
-
   dio.interceptors.add(interceptor);
-
-  dioAppDynamicsTracked.options = options;
-  //trackedDio
-  //trackedDio
 
   //datasource
   getIt.registerLazySingleton<DashBoardRemoteDatasource>(

@@ -43,8 +43,9 @@ dependencies:
   flutter_svg: ^0.22.0
   logger: ^1.1.0
   carousel_slider: ^4.1.1
-  flutter_screenutil: ^5.8.4
-  appdynamics_agent: ^23.3.0
+  flutter_screenutil: ^5.8.4\
+  
+
 
 
 dev_dependencies:

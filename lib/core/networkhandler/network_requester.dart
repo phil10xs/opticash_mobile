@@ -35,8 +35,8 @@ class NetworkRequester {
   }) async {
     try {
       Response<Map<String, dynamic>> response =
-          await dioAppDynamicsTracked.get<Map<String, dynamic>>(
-        "",
+          await dio.get<Map<String, dynamic>>(
+        endpoint,
         queryParameters: {},
         options: Options(
           method: 'GET',
@@ -47,12 +47,6 @@ class NetworkRequester {
           contentType: isFormData ? 'multipart/form-data' : contentType,
         ),
       );
-      Logger('Logger-response.data--- ${response.data}');
-      Logger('Logger-response.statusCode--- ${response.statusCode}');
-      Logger(
-          'Logger-.options.baseUrl--- ${dioAppDynamicsTracked.options.baseUrl}');
-      Logger(
-          'Logger-.options.headers-- ${dioAppDynamicsTracked.options.headers}');
 
       return response;
     } catch (e) {
@@ -72,9 +66,8 @@ class NetworkRequester {
       Log.d("network b4");
       Log.d("network request: $data");
 
-      Response response =
-          await dioAppDynamicsTracked.post<Map<String, dynamic>>(
-        "",
+      Response response = await dio.post<Map<String, dynamic>>(
+        endpoint,
         data: data,
         queryParameters: {},
         options: Options(
@@ -86,16 +79,6 @@ class NetworkRequester {
           contentType: isFormData ? 'multipart/form-data' : contentType,
         ),
       );
-
-      Log.d("network res: $response");
-
-      Logger('Logger-response.data--- ${response.data}');
-      Logger('options.method-- ${dioAppDynamicsTracked.options.method}');
-      Logger('Logger-response.statusCode--- ${response.statusCode}');
-      Logger(
-          'Logger-.options.baseUrl--- ${dioAppDynamicsTracked.options.baseUrl}');
-      Logger(
-          'Logger-.options.headers-- ${dioAppDynamicsTracked.options.headers}');
 
       return response;
     } catch (e) {
@@ -113,9 +96,8 @@ class NetworkRequester {
     String? contentType,
   }) async {
     try {
-      Response response =
-          await dioAppDynamicsTracked.patch<Map<String, dynamic>>(
-        "",
+      Response response = await dio.patch<Map<String, dynamic>>(
+        endpoint,
         data: data,
         queryParameters: {},
         options: Options(
@@ -128,14 +110,6 @@ class NetworkRequester {
         ),
       );
 
-      Logger('Logger-response.data--- ${response.data}');
-      Logger('Logger-response.statusCode--- ${response.statusCode}');
-      Logger(
-          'Logger-.options.baseUrl--- ${dioAppDynamicsTracked.options.baseUrl}');
-      Logger('options.method-- ${dioAppDynamicsTracked.options.method}');
-
-      Logger(
-          'Logger-.options.headers-- ${dioAppDynamicsTracked.options.headers}');
       return response;
     } catch (e) {
       Logger(e.toString());
@@ -149,9 +123,8 @@ class NetworkRequester {
       bool isFormData = false,
       String? contentType}) async {
     try {
-      Response response =
-          await dioAppDynamicsTracked.delete<Map<String, dynamic>>(
-        '',
+      Response response = await dio.delete<Map<String, dynamic>>(
+        endpoint,
         queryParameters: {},
         options: Options(
           method: 'DELETE',
@@ -162,13 +135,6 @@ class NetworkRequester {
           contentType: isFormData ? 'multipart/form-data' : contentType,
         ),
       );
-      Logger('Logger-response.data--- ${response.data}');
-      Logger('Logger-response.statusCode--- ${response.statusCode}');
-      Logger(
-          'Logger-.options.baseUrl--- ${dioAppDynamicsTracked.options.baseUrl}');
-      Logger('options.method-- ${dioAppDynamicsTracked.options.method}');
-      Logger(
-          'Logger-.options.headers-- ${dioAppDynamicsTracked.options.headers}');
 
       return response;
     } catch (e) {
