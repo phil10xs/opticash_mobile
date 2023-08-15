@@ -23,24 +23,14 @@ Future<void> setUp() async {
   var interceptor = VulteInterceptor();
   getIt.registerLazySingleton<VulteInterceptor>(() => interceptor);
   var dio = Dio(options);
-  getIt.registerLazySingleton<Dio>(() => dio);
+  getIt.registerLazySingleton<Dio>(
+    () => dio,
+  );
   dio.interceptors.add(interceptor);
 
   //datasource
   getIt.registerLazySingleton<DashBoardRemoteDatasource>(
       () => DashBoardRemoteDatasourceImpl(networkRequester: getIt()));
-
-//   // Auth datasource
-//   getIt.registerLazySingleton<AuthRemoteDatasource>(
-//       () => AuthRemoteDatasourceImpl(networkRequester: getIt()));
-
-// // repo
-//   getIt.registerLazySingleton<AuthRepository>(
-//     () => AuthRepositoryImpl(
-//       dbLocalDatasource: getIt(),
-//       remoteDatasource: getIt(),
-//     ),
-//   );
 
   getIt.registerLazySingleton<DashBoardRepository>(
     () => DashBoardRepositoryImpl(
@@ -50,10 +40,10 @@ Future<void> setUp() async {
 
   //usecases
   getIt.registerLazySingleton(
-    () => GetAccountUsecase(repository: getIt()),
+    () => LoginUsecase(repository: getIt()),
   );
   getIt.registerLazySingleton(
-    () => GetUserProfileUsecase(repository: getIt()),
+    () => SignUpUsecase(repository: getIt()),
   );
 
 // Notifier

@@ -1,5 +1,4 @@
 // ignore: file_names
-import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:dio/dio.dart';
 import 'package:opticash_mobile/core/utils/string.dart';
 
@@ -8,11 +7,9 @@ import 'failure.dart';
 
 class NetworkRequester {
   NetworkRequester({
-    required this.dioAppDynamicsTracked,
     required this.dio,
   });
 
-  final TrackedDioClient dioAppDynamicsTracked;
   final Dio dio;
 
   String _token = '';
@@ -63,9 +60,6 @@ class NetworkRequester {
     String? contentType,
   }) async {
     try {
-      Log.d("network b4");
-      Log.d("network request: $data");
-
       Response response = await dio.post<Map<String, dynamic>>(
         endpoint,
         data: data,

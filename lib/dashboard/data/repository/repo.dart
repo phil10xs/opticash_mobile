@@ -15,21 +15,11 @@ class DashBoardRepositoryImpl implements DashBoardRepository {
   final DashBoardRemoteDatasource remoteDatasource;
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getAccounts() async {
-    try {
-      var response = await remoteDatasource.getAccounts();
-
-      return Right(response.data!);
-    } catch (e) {
-      return Left(Failure(message: e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Map<String, dynamic>>> getUserProfile() async {
+  Future<Either<Failure, Map<String, dynamic>>> login(
+      {required Map<String, dynamic> data}) async {
     try {
       try {
-        var response = await remoteDatasource.getAccounts();
+        var response = await remoteDatasource.signup(data: data);
 
         return Right(response.data!);
       } catch (e) {
@@ -40,4 +30,37 @@ class DashBoardRepositoryImpl implements DashBoardRepository {
       return Left(Failure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> signup(
+      {required Map<String, dynamic> data}) async {
+    try {
+      try {
+        var response = await remoteDatasource.signup(data: data);
+
+        return Right(response.data!);
+      } catch (e) {
+        return Left(Failure(message: e.toString()));
+      }
+    } catch (e) {
+      Log.d("User result fail ${e}");
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  // @override
+  // Future<Either<Failure, Map<String, dynamic>>> getUserProfile() async {
+  //   try {
+  //     try {
+  //       var response = await remoteDatasource.getAccounts();
+
+  //       return Right(response.data!);
+  //     } catch (e) {
+  //       return Left(Failure(message: e.toString()));
+  //     }
+  //   } catch (e) {
+  //     Log.d("User result fail ${e}");
+  //     return Left(Failure(message: e.toString()));
+  //   }
+  // }
 }

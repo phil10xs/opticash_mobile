@@ -4,26 +4,28 @@ import 'package:opticash_mobile/core/networkhandler/failure.dart';
 import 'package:opticash_mobile/dashboard/domain/repository/repo.dart';
 import '../../../../core/usecases/usecases.dart';
 
-class GetAccountUsecase extends Usecase<void, NoParams> {
-  GetAccountUsecase({
+class LoginUsecase extends Usecase<void, Map<String, dynamic>> {
+  LoginUsecase({
     required this.repository,
   });
 
   final DashBoardRepository repository;
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> call(NoParams params) async =>
-      await repository.getAccounts();
+  Future<Either<Failure, Map<String, dynamic>>> call(
+          Map<String, dynamic> params) async =>
+      await repository.login(data: params);
 }
 
-class GetUserProfileUsecase extends Usecase<void, NoParams> {
-  GetUserProfileUsecase({
+class SignUpUsecase extends Usecase<void, Map<String, dynamic>> {
+  SignUpUsecase({
     required this.repository,
   });
 
   final DashBoardRepository repository;
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> call(NoParams params) async =>
-      await repository.getUserProfile();
+  Future<Either<Failure, Map<String, dynamic>>> call(
+          Map<String, dynamic> params) async =>
+      await repository.signup(data: params);
 }
