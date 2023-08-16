@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:opticash_mobile/core/di-manual/di_manual.dart';
-import 'package:opticash_mobile/dashboard/data/datasource/remote/remote.dart';
+import 'package:opticash_mobile/dashboard/presentation/notifier/dash_notifier.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +23,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: getIt<DashBaordNotifier>()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -40,17 +49,24 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
+  void _incrementCounter() async {
     setState(() {
       _counter++;
     });
 
-    getIt<DashBoardRemoteDatasource>().signup(data: {
+    var response = await context.read<DashBaordNotifier>().signUp(param: {
       "first_name": "Phil",
       "last_name": "Katage",
       "email": "phil20xs@yopmail.com",
       "password": "Qwerty1234@@"
     });
+    log("ftest ${response.message}");
+  }
+
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {});
+    super.initState();
   }
 
   @override

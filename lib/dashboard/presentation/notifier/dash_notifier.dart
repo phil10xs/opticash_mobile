@@ -3,8 +3,11 @@
 // import 'package:flutter/material.dart';
 // import '../../domain/usecase/dash_usecases.dart';
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:opticash_mobile/dashboard/domain/usecase/dash_usecases.dart';
+import 'package:provider/provider.dart';
 
 import '../../data/model/basemodel.dart';
 
@@ -45,16 +48,29 @@ class DashBaordNotifier with ChangeNotifier {
   }
 
   Future<Result<dynamic>> signUp({Map<String, dynamic>? param}) async {
-    Result<dynamic> result = Result(error: false, loading: true);
+    Result<dynamic> result = Result(error: false, loading: true, message: "");
     var data = await _signUpUsecase.call(param!);
     data.fold((l) {
       result.error = false;
+      result.message = l.message;
     }, (r) {
-      result.data = r;
+      result.message = r['message'];
+      result.data = r['data'];
       result.error = true;
     });
     result.loading = false;
     setsignUpResult = result;
-    return result;
+    return signUpResult!;
   }
 }
+
+// extension BuildContextNotifier on BuildContext {
+//   DashBaordNotifier get mynotifier =>
+//       Provider.of<DashBaordNotifier>(this, listen: false);
+
+//   T read<T>() => Provider.of<T>(this, listen: false);
+
+//   T watch<T>() => Provider.of<T>(this, listen: true);
+
+//   ThemeData get theme => Theme.of(this);
+// }
