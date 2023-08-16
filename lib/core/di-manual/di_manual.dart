@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:opticash_mobile/core/networkhandler/interceptor.dart';
+import 'package:opticash_mobile/core/networkhandler/network_requester.dart';
 import 'package:opticash_mobile/dashboard/data/datasource/remote/remote.dart';
 import 'package:opticash_mobile/dashboard/data/repository/repo.dart';
 import 'package:opticash_mobile/dashboard/domain/repository/repo.dart';
 import 'package:opticash_mobile/dashboard/domain/usecase/dash_usecases.dart';
+import 'package:opticash_mobile/dashboard/presentation/notifier/dash_notifier.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -29,6 +31,8 @@ Future<void> setUp() async {
   dio.interceptors.add(interceptor);
 
   //datasource
+  getIt.registerLazySingleton<NetworkRequester>(
+      () => NetworkRequester(dio: getIt()));
   getIt.registerLazySingleton<DashBoardRemoteDatasource>(
       () => DashBoardRemoteDatasourceImpl(networkRequester: getIt()));
 
@@ -46,14 +50,6 @@ Future<void> setUp() async {
     () => SignUpUsecase(repository: getIt()),
   );
 
-// Notifier
-  // getIt.registerLazySingleton<LoginNotifier>(
-  //   () => LoginNotifier(
-  //     getIt(),
-  //   ),
-  // );
-  // getIt.registerLazySingleton<DashBaordNotifier>(() => DashBaordNotifier(
-  //     getAccountUsecase: getIt(),
-  //     getUserProfileUsecase: getIt(),
-  //     getDebittableAccountUsecase: getIt()));
+  getIt.registerLazySingleton<DashBaordNotifier>(
+      () => DashBaordNotifier(loginUsecase: getIt(), signUpUsecase: getIt()));
 }

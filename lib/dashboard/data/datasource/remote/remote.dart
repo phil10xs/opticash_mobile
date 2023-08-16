@@ -29,7 +29,7 @@ class DashBoardRemoteDatasourceImpl extends DashBoardRemoteDatasource {
     var response = await networkRequester.post(
       '/user/test/register',
       isProtected: true,
-      data: {},
+      data: data,
       contentType: "application/json",
     );
     return response;

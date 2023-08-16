@@ -5,6 +5,7 @@ class Result<T> {
   String? message;
   String? userMessage;
   int? retryCount;
+  bool? loading;
   List<dynamic>? validationMessages;
   bool? hasValidationMessages;
 
@@ -16,6 +17,7 @@ class Result<T> {
     this.userMessage,
     this.response,
     this.retryCount,
+    this.loading,
     this.validationMessages,
   });
 }

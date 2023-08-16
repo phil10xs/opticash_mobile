@@ -13,6 +13,7 @@ class VulteInterceptor extends Interceptor {
     Logger('Logger-.options.baseUrl--- ${options.baseUrl}');
     Logger('Logger-.options.path--- ${options.path}');
     Logger('options.method-- ${options.method}');
+    Logger('options.method-- ${options.data}');
     Logger('Logger-.options.headers-- ${options.headers}');
     return handler.next(options);
   }
