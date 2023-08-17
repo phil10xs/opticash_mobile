@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:opticash_mobile/dashboard/presentation/views/home.dart';
+import 'package:opticash_mobile/dashboard/presentation/views/create_account.dart';
+import 'package:opticash_mobile/dashboard/presentation/views/dashboard.dart';
+import 'package:opticash_mobile/dashboard/presentation/views/login.dart';
 
 // final routes = <String, WidgetBuilder>{
 //   LoginScreen.routeName: (BuildContext context) => const LoginScreen(),
@@ -9,30 +11,30 @@ import 'package:opticash_mobile/dashboard/presentation/views/home.dart';
 // };
 Route onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
-    // case LoginScreen.routeName:
-    //   // final Map args = settings.arguments as Map;
-    //   return MaterialPageRoute(
-    //     builder: (_) => const LoginScreen(),
-    //     settings: const RouteSettings(name: LoginScreen.routeName),
-    //   );
-
-    case HomeScreen.routeName:
+    case LoginScreen.routeName:
       // final Map args = settings.arguments as Map;
       return MaterialPageRoute(
-        builder: (_) => const HomeScreen(),
-        settings: const RouteSettings(name: HomeScreen.routeName),
+        builder: (_) => const LoginScreen(),
+        settings: const RouteSettings(name: LoginScreen.routeName),
       );
 
-    // case DashBoardScreen.routeName:
-    //   return MaterialPageRoute(
-    //     builder: (_) => const DashBoardScreen(),
-    //     settings: const RouteSettings(name: DashBoardScreen.routeName),
-    //   );
+    case DashBoardScreen.routeName:
+      // final Map args = settings.arguments as Map;
+      return MaterialPageRoute(
+        builder: (_) => const DashBoardScreen(),
+        settings: const RouteSettings(name: DashBoardScreen.routeName),
+      );
+
+    case CreateAccount.routeName:
+      return MaterialPageRoute(
+        builder: (_) => const CreateAccount(),
+        settings: const RouteSettings(name: CreateAccount.routeName),
+      );
 
     default:
       return MaterialPageRoute(
-        builder: (_) => const HomeScreen(),
-        settings: const RouteSettings(name: HomeScreen.routeName),
+        builder: (_) => const CreateAccount(),
+        settings: const RouteSettings(name: CreateAccount.routeName),
       );
   }
 }

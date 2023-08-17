@@ -6,6 +6,7 @@ import 'package:opticash_mobile/dashboard/data/datasource/remote/remote.dart';
 import 'package:opticash_mobile/dashboard/data/repository/repo.dart';
 import 'package:opticash_mobile/dashboard/domain/repository/repo.dart';
 import 'package:opticash_mobile/dashboard/domain/usecase/dash_usecases.dart';
+import 'package:opticash_mobile/dashboard/presentation/notifier/app_notifier.dart';
 import 'package:opticash_mobile/dashboard/presentation/notifier/dash_notifier.dart';
 
 GetIt getIt = GetIt.instance;
@@ -52,4 +53,6 @@ Future<void> setUp() async {
 
   getIt.registerLazySingleton<DashBaordNotifier>(
       () => DashBaordNotifier(loginUsecase: getIt(), signUpUsecase: getIt()));
+
+  getIt.registerLazySingleton<MyNotifier>(() => MyNotifier());
 }

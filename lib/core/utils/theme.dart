@@ -27,6 +27,12 @@ class VulteTheme {
         fontWeight: FontWeight.w400,
         color: appColor.subTextColor,
       ),
+      bodyLarge: TextStyle(
+        fontFamily: "Poppins",
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: appColor.subTextColor,
+      ),
       bodyMedium: TextStyle(
         fontFamily: "Rogerex",
         fontSize: 16,

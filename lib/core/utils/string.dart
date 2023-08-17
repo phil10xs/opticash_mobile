@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-const String kName = 'Polaris';
-const String kFont = 'SourceSansPro';
+const String kName = 'Opticash';
+const String kFont = "Rogerex";
 
 // ignore: non_constant_identifier_names
 void Logger(dynamic error) {

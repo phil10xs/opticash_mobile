@@ -1,176 +1,198 @@
+import 'package:flutter/material.dart';
+import 'package:opticash_mobile/core/assets/assets.dart';
+import 'package:opticash_mobile/core/utils/colors.dart';
+import 'package:opticash_mobile/dashboard/presentation/notifier/app_notifier.dart';
+import 'package:opticash_mobile/dashboard/presentation/views/home.dart';
+import 'package:provider/provider.dart';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:provider/provider.dart';
+class DashBoardScreen extends StatefulWidget {
+  static const routeName = "/dashboard";
+  const DashBoardScreen({Key? key}) : super(key: key);
 
-// import '../notifier/data.dart';
-// import 'home_page.dart';
+  @override
+  State<DashBoardScreen> createState() => _DashBoardScreenState();
+}
 
-// List<BottomNavModel> sections = [
-//   BottomNavModel(
-//     label: 'Home',
-//     icon: kNavHome,
-//     iconActive: kNavHomeActive,
-//     tooltip: 'Home',
-//     views: const HomePageView(),
-//   ),
-//   BottomNavModel(
-//     label: 'Transfer',
-//     icon: kNavTransfer,
-//     iconActive: kNavTransferActive,
-//     tooltip: 'Transfer',
-//     views: Container(),
-//   ),
-//   BottomNavModel(
-//     label: 'Loan',
-//     icon: kNavLoan,
-//     iconActive: kNavLoanActive,
-//     tooltip: 'Loan',
-//     views: Container(),
-//   ),
-//   BottomNavModel(
-//     label: 'History',
-//     icon: kNavHistory,
-//     iconActive: kNavHistoryActive,
-//     tooltip: 'History',
-//     views: Container(),
-//   ),
-//   BottomNavModel(
-//     label: 'Menu',
-//     icon: kNavMenu,
-//     iconActive: kNavMenuActive,
-//     tooltip: 'Menu',
-//     views: Container(),
-//   ),
-// ];
+class _DashBoardScreenState extends State<DashBoardScreen> {
+  int? currentIndex = 0;
 
-// class DashBoardScreen extends StatefulWidget {
-//   static const routeName = "/dashboard";
+  @override
+  Widget build(BuildContext context) {
+    final _screens = [
+      const HomeScreen(),
+      const Center(child: Text('')),
+      const SizedBox(),
+      const Center(child: Text('')),
+      const Center(child: Text(''))
+    ];
 
-//   const DashBoardScreen({Key? key}) : super(key: key);
+    return Consumer<MyNotifier>(builder: (context, value, child) {
+      final _list = [
+        SizedBox(
+          child: Column(
+            children: [
+              const SizedBox(height: 35),
+              ImageIcon(
+                AssetImage(kMore),
+                color: value.current == 0 ? appColor.tertiary : Colors.grey,
+              ),
+              Text(
+                'Home',
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                      color:
+                          value.current == 0 ? appColor.tertiary : Colors.grey,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          child: Column(
+            children: [
+              const SizedBox(height: 35),
+              ImageIcon(
+                AssetImage(kCard),
+                color: value.current == 1
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              Text(
+                'Card',
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                      color: value.current == 1
+                          ? Theme.of(context).primaryColor
+                          : Colors.grey,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          child: Column(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      kSend,
+                      width: 65,
+                      height: 60,
+                    ),
+                    Text(
+                      'Send',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 11,
+                              color: Theme.of(context).primaryColor),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          child: Column(
+            children: [
+              const SizedBox(height: 35),
+              ImageIcon(
+                AssetImage(kSwap),
+                color: value.current == 3
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              Text(
+                'Swap',
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                      color: value.current == 3
+                          ? Theme.of(context).primaryColor
+                          : Colors.grey,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          child: Column(
+            children: [
+              const SizedBox(height: 35),
+              ImageIcon(
+                AssetImage(kAccount),
+                color: value.current == 4
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              Text(
+                'Account',
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                      color: value.current == 4
+                          ? Theme.of(context).primaryColor
+                          : Colors.grey,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      ];
 
-//   @override
-//   State<DashBoardScreen> createState() => _DashBoardScreenState();
-// }
-
-// class _DashBoardScreenState extends State<DashBoardScreen> {
-//   int? currentIndex = 0;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-//         statusBarColor: appColor.transparent,
-//         statusBarIconBrightness: Brightness.dark));
-//     return Scaffold(
-//       backgroundColor: appColor.background1.withOpacity(0.94),
-//       body: Container(
-//         // color: appColor.blue,
-//         child: Stack(
-//           children: [
-//             const _PageBody(),
-//             Align(
-//               alignment: Alignment.bottomCenter,
-//               child: Container(
-//                 height: 115,
-//                 color: appColor.transparent,
-//                 child: CustomPaint(
-//                   // size: const Size(double.infinity, 115),
-//                   painter: InwardArcPainter(),
-//                   // child: _BottomAppBar(),
-//                   child: const BottomBar(),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//       // bottomNavigationBar: Container(
-//       //   // height: 115,
-//       //   color: appColor.transparent,
-//       //   child: CustomPaint(
-//       //     painter: InwardArcPainter(),
-//       //     child: const BottomBar(),
-//       //   ),
-//       // ),
-//     );
-//   }
-// }
-
-// class _PageBody extends StatelessWidget {
-//   const _PageBody({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<DashBaordNotifier>(builder: (_, value, __) {
-//       return IndexedStack(
-//         index: value.section,
-//         children: sections.map((e) => e.views ?? const SizedBox()).toList(),
-//       );
-//     });
-//   }
-// }
-
-// class _BottomAppBar extends StatelessWidget {
-//   const _BottomAppBar({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<DashBaordNotifier>(builder: (_, value, __) {
-//       return BottomAppBar(
-//         color: appColor.transparent,
-//         elevation: 0,
-//         // shape: BottomAppBarShape(),
-//         child: DefaultTabController(
-//             initialIndex: value.section,
-//             length: 5,
-//             child: TabBar(
-//               padding: EdgeInsets.zero,
-//               indicatorSize: TabBarIndicatorSize.tab,
-//               indicatorPadding: EdgeInsets.zero,
-//               indicatorWeight: 1,
-//               tabs: sections.map((e) {
-//                 if (sections[value.section].label == e.label) {
-//                   ///isSelect
-//                   return Tab(
-//                     height: 100,
-//                     child: Container(
-//                       width: 155,
-//                       height: 155,
-//                       decoration: BoxDecoration(
-//                           shape: BoxShape.circle,
-//                           color: true ? appColor.primary : Colors.grey,
-//                           boxShadow: [
-//                             BoxShadow(
-//                                 spreadRadius: 3,
-//                                 offset: const Offset(0, 3),
-//                                 blurRadius: 8,
-//                                 color: appColor.black.withOpacity(0.4))
-//                           ]),
-//                       padding: const EdgeInsets.all(15),
-//                       child: SvgPicture.asset(
-//                         e.iconActive!,
-//                         color: appColor.white,
-//                         // width: 24,
-//                         // height: 24,
-//                       ),
-//                     ),
-//                   );
-//                 }
-//                 return Tab(
-//                   text: 'Home',
-//                   icon: Icon(Icons.home),
-//                 );
-//               }).toList(),
-//             )),
-//       );
-//     });
-//   }
-// }
+      return Scaffold(
+        body: _screens[value.current],
+        bottomNavigationBar: SizedBox(
+          width: double.infinity,
+          height: 90,
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 70,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 3,
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  for (var i = 0; i < _list.length; i++) ...[
+                    GestureDetector(
+                      onTap: () {
+                        if (i == 2) {}
+                        value.current = i;
+                        currentIndex = i;
+                      },
+                      child: _list[i],
+                    ),
+                  ],
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}
