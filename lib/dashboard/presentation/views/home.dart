@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:opticash_mobile/core/assets/assets.dart';
@@ -16,12 +18,47 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  ValueNotifier<int> activeSlides = ValueNotifier(0);
+
+  PageController _pageController = PageController();
+
+  Timer? autoScrollTimer;
+
+  startAutoScroll() {
+    if (autoScrollTimer != null) {
+      return;
+    }
+    autoScrollTimer = Timer.periodic(Duration(milliseconds: 4000), (timer) {
+      if (_pageController.hasClients) {
+        if (activeSlides.value < (2 - 1)) {
+          _pageController.nextPage(
+              duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+        } else {
+          _pageController.jumpToPage(0);
+        }
+      }
+    });
+  }
+
+  List<Widget> cardSliderContent = [
+    const ReferralCard(),
+    const ReferralCard(),
+    const ReferralCard()
+  ];
+
+  @override
+  void initState() {
+    startAutoScroll();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: Colors.white,
       ),
     );
+
     return Consumer<DashBaordNotifier>(builder: (context, value, child) {
       return SafeArea(
         child: Scaffold(
@@ -52,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 16,
                           ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
                     Text(
@@ -68,14 +105,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             actions: [
-              Column(
+              const Column(
                 children: [
                   SizedBox(
                     height: 20,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               Stack(
@@ -106,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Stack(
@@ -137,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
             ],
@@ -156,16 +193,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         Container(
-                          padding: EdgeInsets.only(right: 10, left: 10),
-                          margin: EdgeInsets.all(10),
+                          padding: const EdgeInsets.only(right: 10, left: 10),
+                          margin: const EdgeInsets.all(10),
                           height: 25,
                           width: 200,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
                             color: appColor.tertiary,
                           ),
                           child: Column(
@@ -179,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 18,
                                     width: 18,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Text(
                                     'Opticash Balance',
                                     style: Theme.of(context)
@@ -191,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           fontSize: 14,
                                         ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Image.asset(
                                     kDropdown,
                                     height: 15,
@@ -202,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
@@ -216,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w700,
                               ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -230,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Icon(
@@ -338,48 +376,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 65, left: 18),
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      kActivity,
-                      width: double.infinity,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 30),
-                            child: Text(
-                              'Refer a friend\n and earn \$3 per\n referral',
-                              maxLines: 3,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    fontFamily: "Poppins",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: appColor.white,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                height: MediaQuery.of(context).size.height * .2,
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (page) {
+                    activeSlides.value = page;
+                  },
+                  children: cardSliderContent,
                 ),
               ),
-              // Today, 26 june 2021
-              SizedBox(
+              // ReferralCard(),
+              const SizedBox(
                 height: 20,
               ),
               Padding(
@@ -396,7 +408,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Padding(
@@ -415,7 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 35,
                         width: 35,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Column(
@@ -450,7 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -492,5 +504,52 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     });
+  }
+}
+
+class ReferralCard extends StatefulWidget {
+  const ReferralCard({super.key});
+
+  @override
+  State<ReferralCard> createState() => _ReferralCardState();
+}
+
+class _ReferralCardState extends State<ReferralCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 65, left: 18),
+      child: Stack(
+        children: [
+          Image.asset(
+            kActivity,
+            width: double.infinity,
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 30),
+                  child: Text(
+                    'Refer a friend\n and earn \$3 per\n referral',
+                    maxLines: 3,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontFamily: "Poppins",
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: appColor.white,
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
