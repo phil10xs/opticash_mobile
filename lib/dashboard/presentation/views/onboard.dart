@@ -47,7 +47,7 @@ class _OnboardState extends State<Onboard> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 70,
                   ),
                   Text(
                     'Send Money faster than imagined',
@@ -67,6 +67,34 @@ class _OnboardState extends State<Onboard> {
                         .copyWith(color: Colors.white),
                   ),
                   Spacer(),
+                  Row(
+                    children: [
+                      Container(
+                        width: 60,
+                        height: 2.5,
+                        color: appColor.secondary,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 60,
+                        height: 2.5,
+                        color: appColor.secondary,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 60,
+                        height: 2.5,
+                        color: appColor.white,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
                   PrimaryButton(
                     useGradient: true,
                     color: appColor.secondary,

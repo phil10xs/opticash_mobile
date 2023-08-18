@@ -33,7 +33,7 @@ class _SplashOneState extends State<SplashOne> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: 10,
+                height: 65,
               ),
               Center(
                 child: Container(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:opticash_mobile/core/assets/assets.dart';
 import 'package:opticash_mobile/core/utils/colors.dart';
 import 'package:opticash_mobile/dashboard/presentation/views/dashboard.dart';
+import 'package:opticash_mobile/dashboard/presentation/views/login.dart';
 import 'package:opticash_mobile/dashboard/presentation/widgets/button.dart';
 
 mixin DashBoardNotifierMixin on ChangeNotifier {
@@ -16,7 +17,7 @@ mixin DashBoardNotifierMixin on ChangeNotifier {
       SuccessResponse(
         onLogin: () => {
           Navigator.of(context).pop(),
-          Navigator.of(context).pushNamed(DashBoardScreen.routeName),
+          Navigator.of(context).pushNamed(LoginScreen.routeName),
         },
       ),
     );

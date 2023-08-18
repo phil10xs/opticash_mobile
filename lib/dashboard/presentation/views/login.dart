@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:opticash_mobile/core/utils/colors.dart';
 import 'package:opticash_mobile/core/utils/extension.dart';
 import 'package:opticash_mobile/dashboard/presentation/notifier/dash_notifier.dart';
+import 'package:opticash_mobile/dashboard/presentation/views/create_account.dart';
 import 'package:opticash_mobile/dashboard/presentation/views/dashboard.dart';
 import 'package:opticash_mobile/dashboard/presentation/widgets/button.dart';
 
@@ -168,14 +169,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               "Don’t have account?",
                               style: Theme.of(context).textTheme.headlineMedium,
                             ),
-                            Text(
-                              " Create Account ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: appColor.primary),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(CreateAccount.routeName);
+                              },
+                              child: Text(
+                                " Create Account ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: appColor.primary),
+                              ),
                             ),
                           ],
                         ),

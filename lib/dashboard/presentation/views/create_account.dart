@@ -72,9 +72,14 @@ class _CreateAccountState extends State<CreateAccount> {
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  'Create Account',
-                  style: Theme.of(context).textTheme.headlineLarge,
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(CreateAccount.routeName);
+                  },
+                  child: Text(
+                    'Create Account',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -235,7 +240,53 @@ class _CreateAccountState extends State<CreateAccount> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .15,
                   child: Column(
-                    children: [],
+                    children: [
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 30,
+                            height: 4.5,
+                            decoration: BoxDecoration(
+                                color: appColor.secondary,
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          SizedBox(
+                            width: 6,
+                          ),
+                          Container(
+                            width: 30,
+                            height: 4.5,
+                            decoration: BoxDecoration(
+                                color: appColor.secondary,
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          SizedBox(
+                            width: 6,
+                          ),
+                          Container(
+                            width: 30,
+                            height: 4.5,
+                            decoration: BoxDecoration(
+                                color: appColor.newGrey,
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          SizedBox(
+                            width: 6,
+                          ),
+                          //
+                          Text(
+                            'Strong',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: '',
+                                color: appColor.secondary),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
                 ),
                 Column(
