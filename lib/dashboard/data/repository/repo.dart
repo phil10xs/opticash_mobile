@@ -16,7 +16,7 @@ class DashBoardRepositoryImpl implements DashBoardRepository {
       {required Map<String, dynamic> data}) async {
     try {
       try {
-        var response = await remoteDatasource.signup(data: data);
+        var response = await remoteDatasource.login(data: data);
 
         return Right(response.data!);
       } catch (e) {

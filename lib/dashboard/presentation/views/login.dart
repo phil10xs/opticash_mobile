@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:opticash_mobile/core/utils/colors.dart';
+import 'package:opticash_mobile/core/utils/extension.dart';
+import 'package:opticash_mobile/dashboard/presentation/notifier/dash_notifier.dart';
 import 'package:opticash_mobile/dashboard/presentation/views/dashboard.dart';
 import 'package:opticash_mobile/dashboard/presentation/widgets/button.dart';
 
@@ -14,8 +16,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var showPassword = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var dash = context.read<DashBaordNotifier>();
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -56,15 +65,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 25,
                 ),
                 TextFormField(
-                  // controller: r,
-
                   keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // validator: InputValidator. (
-                  //     message: "Email Address or Username must not be empty"),
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp(r"\s")),
                   ],
+                  onChanged: (value) => {
+                    dash.updateLoginCredential("email", value),
+                  },
                   style: Theme.of(context).textTheme.bodySmall,
                   decoration: InputDecoration(
                     floatingLabelStyle:
@@ -92,16 +100,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   obscureText: !showPassword,
                   obscuringCharacter: '●',
-
-                  // controller: r,
-
                   keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // validator: InputValidator. (
-                  //     message: "Email Address or Username must not be empty"),
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp(r"\s")),
                   ],
+                  onChanged: (value) => {
+                    dash.updateLoginCredential("password", value),
+                  },
                   style: showPassword
                       ? Theme.of(context).textTheme.bodySmall
                       : Theme.of(context)
@@ -177,14 +183,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 10,
                         ),
                         PrimaryButton(
+                          color: appColor.black,
                           title: Text(
                             'Sign in'.toUpperCase(),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           onLogin: () {
-                            Navigator.of(context).pushNamed(
-                              DashBoardScreen.routeName,
-                            );
+                            dash.login(context, param: dash.loginCredentials);
+                            // Navigator.of(context).pushNamed(
+                            //   DashBoardScreen.routeName,
+                            // );
                           },
                         ),
                         const SizedBox(

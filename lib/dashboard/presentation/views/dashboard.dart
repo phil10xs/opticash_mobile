@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:opticash_mobile/core/assets/assets.dart';
 import 'package:opticash_mobile/core/utils/colors.dart';
 import 'package:opticash_mobile/dashboard/presentation/notifier/app_notifier.dart';
@@ -18,6 +19,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+      ),
+    );
     final _screens = [
       const HomeScreen(),
       const Center(child: Text('')),

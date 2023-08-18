@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:opticash_mobile/core/utils/colors.dart';
+import 'package:opticash_mobile/core/utils/input_validator.dart';
+import 'package:opticash_mobile/dashboard/data/model/accountmodel.dart';
 import 'package:opticash_mobile/dashboard/presentation/notifier/dash_notifier.dart';
 import 'package:opticash_mobile/dashboard/presentation/views/login.dart';
 import 'package:opticash_mobile/dashboard/presentation/widgets/button.dart';
@@ -20,23 +22,31 @@ class _CreateAccountState extends State<CreateAccount> {
   var showPassword = false;
 
   void _incrementCounter() async {
-    var response = await context.read<DashBaordNotifier>().signUp(param: {
-      "first_name": "Phil",
-      "last_name": "Katage",
-      "email": "phil20xs@yopmail.com",
-      "password": "Qwerty1234@@"
-    });
-    log("ftest ${response.message}");
+    var dash = context.read<DashBaordNotifier>();
+
+    dash.signUp(context, param: dash.credentials);
   }
 
   @override
   void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {});
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+        ),
+      );
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+      ),
+    );
+    var dash = context.read<DashBaordNotifier>();
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -48,11 +58,16 @@ class _CreateAccountState extends State<CreateAccount> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  "assets/pngs/back.png",
-                  width: 34,
-                  height: 34,
-                  color: appColor.primary,
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Image.asset(
+                    "assets/pngs/back.png",
+                    width: 34,
+                    height: 34,
+                    color: appColor.primary,
+                  ),
                 ),
                 const SizedBox(
                   height: 30,
@@ -72,15 +87,13 @@ class _CreateAccountState extends State<CreateAccount> {
                   height: 20,
                 ),
                 TextFormField(
-                  // controller: r,
-
-                  keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // validator: InputValidator. (
-                  //     message: "Email Address or Username must not be empty"),
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp(r"\s")),
                   ],
+                  onChanged: (value) {
+                    dash.updateCredential("first_name", value);
+                  },
                   style: Theme.of(context).textTheme.bodySmall,
                   decoration: InputDecoration(
                     floatingLabelStyle:
@@ -106,15 +119,14 @@ class _CreateAccountState extends State<CreateAccount> {
                   height: 20,
                 ),
                 TextFormField(
-                  // controller: r,
-
                   keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // validator: InputValidator. (
-                  //     message: "Email Address or Username must not be empty"),
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp(r"\s")),
                   ],
+                  onChanged: (value) {
+                    dash.updateCredential("last_name", value);
+                  },
                   style: Theme.of(context).textTheme.bodySmall,
                   decoration: InputDecoration(
                     floatingLabelStyle:
@@ -132,7 +144,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     enabledBorder: myfocusborder(),
                     filled: true,
                     fillColor: Colors.white70,
-                    hintText: 'James Robert',
+                    hintText: 'Robert',
                     hintStyle: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
@@ -140,16 +152,15 @@ class _CreateAccountState extends State<CreateAccount> {
                   height: 20,
                 ),
                 TextFormField(
-                  // controller: r,
-
                   keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // validator: InputValidator. (
-                  //     message: "Email Address or Username must not be empty"),
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp(r"\s")),
                   ],
                   style: Theme.of(context).textTheme.bodySmall,
+                  onChanged: (value) {
+                    dash.updateCredential("email", value);
+                  },
                   decoration: InputDecoration(
                     floatingLabelStyle:
                         Theme.of(context).textTheme.headlineMedium,
@@ -176,16 +187,14 @@ class _CreateAccountState extends State<CreateAccount> {
                 TextFormField(
                   obscureText: !showPassword,
                   obscuringCharacter: '●',
-
-                  // controller: r,
-
                   keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // validator: InputValidator. (
-                  //     message: "Email Address or Username must not be empty"),
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp(r"\s")),
                   ],
+                  onChanged: (value) {
+                    dash.updateCredential("password", value);
+                  },
                   style: showPassword
                       ? Theme.of(context).textTheme.bodySmall
                       : Theme.of(context)
@@ -219,19 +228,14 @@ class _CreateAccountState extends State<CreateAccount> {
                     enabledBorder: myfocusborder(),
                     filled: true,
                     fillColor: Colors.white70,
-                    hintText: 'James Robert',
+                    hintText: "Password",
                     hintStyle: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .15,
                   child: Column(
-                    children: [
-                      Text(
-                        "Already have an account? ",
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                    ],
+                    children: [],
                   ),
                 ),
                 Column(
@@ -245,14 +249,20 @@ class _CreateAccountState extends State<CreateAccount> {
                               "Already have an account? ",
                               style: Theme.of(context).textTheme.headlineMedium,
                             ),
-                            Text(
-                              "Sign In",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: appColor.primary),
+                            InkWell(
+                              onTap: () => {
+                                Navigator.of(context)
+                                    .pushNamed(LoginScreen.routeName)
+                              },
+                              child: Text(
+                                "Sign In",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: appColor.primary),
+                              ),
                             ),
                           ],
                         ),
@@ -260,14 +270,16 @@ class _CreateAccountState extends State<CreateAccount> {
                           height: 10,
                         ),
                         PrimaryButton(
+                          color: appColor.black,
                           title: Text(
                             'Create New Account'.toUpperCase(),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           onLogin: () {
-                            Navigator.of(context).pushNamed(
-                              LoginScreen.routeName,
-                            );
+                            _incrementCounter();
+                            // Navigator.of(context).pushNamed(
+                            //   LoginScreen.routeName,
+                            // );
                           },
                         ),
                         const SizedBox(

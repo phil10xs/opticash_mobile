@@ -11,6 +11,7 @@ import 'package:opticash_mobile/core/utils/theme.dart';
 import 'package:opticash_mobile/dashboard/presentation/notifier/app_notifier.dart';
 import 'package:opticash_mobile/dashboard/presentation/notifier/dash_notifier.dart';
 import 'package:opticash_mobile/dashboard/presentation/views/create_account.dart';
+import 'package:opticash_mobile/dashboard/presentation/views/splashone.dart';
 import 'package:opticash_mobile/dashboard/presentation/widgets/button.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         onGenerateRoute: onGenerateRoute,
         theme: theme,
-        home: const CreateAccount(),
+        home: const SplashOne(),
       ),
     );
   }

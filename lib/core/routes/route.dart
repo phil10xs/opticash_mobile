@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:opticash_mobile/dashboard/presentation/views/create_account.dart';
 import 'package:opticash_mobile/dashboard/presentation/views/dashboard.dart';
 import 'package:opticash_mobile/dashboard/presentation/views/login.dart';
+import 'package:opticash_mobile/dashboard/presentation/views/onboard.dart';
 
 // final routes = <String, WidgetBuilder>{
 //   LoginScreen.routeName: (BuildContext context) => const LoginScreen(),
@@ -16,6 +17,12 @@ Route onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => const LoginScreen(),
         settings: const RouteSettings(name: LoginScreen.routeName),
+      );
+
+    case Onboard.routeName:
+      return MaterialPageRoute(
+        builder: (_) => const Onboard(),
+        settings: const RouteSettings(name: Onboard.routeName),
       );
 
     case DashBoardScreen.routeName:

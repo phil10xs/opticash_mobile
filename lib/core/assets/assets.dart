@@ -19,6 +19,9 @@ final kSendMoney = 'send-money'.png;
 final kAccountDetails = 'account-details'.png;
 final kActivity = 'activity'.png;
 final kFlag = 'flag'.png;
+final kOpticash = "opticash".png;
+final kSplash = "splash".png;
+final kOnboard = "onboard".png;
 
 extension AssetExt on String {
   String get png {
